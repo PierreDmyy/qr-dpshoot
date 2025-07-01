@@ -1,4 +1,5 @@
 require('dotenv').config();
+const BASE_URL = process.env.BASE_URL;
 const express = require('express');
 const sqlite3 = require('sqlite3').verbose();
 const QRCode = require('qrcode');
@@ -40,7 +41,7 @@ app.post('/generate', async (req, res) => {
     const { slug, url } = req.body;
     db.run('INSERT INTO qrcodes (slug, url) VALUES (?, ?)', [slug, url], async (err) => {
         if (err) return res.status(400).send('Slug déjà utilisé.');
-        const qr = await QRCode.toDataURL(`http://localhost:${PORT}/q/${slug}`);
+       const qr = await QRCode.toDataURL(`${BASE_URL}/q/${slug}`);
         res.render('qr', { qr, slug });
     });
 });
