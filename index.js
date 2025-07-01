@@ -10,6 +10,17 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.set('view engine', 'ejs');
 
+// Page admin : liste de tous les QR codes
+app.get('/admin', (req, res) => {
+    db.all('SELECT * FROM qrcodes', async (err, rows) => {
+        if (err) return res.status(500).send('Erreur DB');
+        const data = await Promise.all(rows.map(async row => {
+            const qr = await QRCode.toDataURL(`${BASE_URL}/q/${row.slug}`);
+            return { ...row, qr };
+        }));
+        res.render('admin', { data, baseUrl: BASE_URL });
+    });
+});
 // Création de la table si elle n'existe pas
 db.run(`CREATE TABLE IF NOT EXISTS qrcodes (
     slug TEXT PRIMARY KEY,

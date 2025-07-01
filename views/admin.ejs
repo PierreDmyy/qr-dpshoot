@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>QR Admin</title>
+    <style>
+        body { font-family: sans-serif; padding: 2rem; }
+        .qr { margin-bottom: 2rem; border-bottom: 1px solid #ccc; padding-bottom: 1rem; }
+        img { width: 150px; }
+        code { background: #f5f5f5; padding: 2px 6px; }
+    </style>
+</head>
+<body>
+    <h1>Liste des QR codes</h1>
+    <% data.forEach(item => { %>
+        <div class="qr">
+            <h3><%= item.slug %></h3>
+            <p><strong>Redirige vers :</strong> <a href="<%= item.url %>" target="_blank"><%= item.url %></a></p>
+            <img src="<%= item.qr %>" alt="QR <%= item.slug %>" />
+            <p><strong>URL de scan :</strong> <code><%= baseUrl %>/q/<%= item.slug %></code></p>
+            <p><a href="/stats/<%= item.slug %>">📊 Voir les stats</a></p>
+        </div>
+    <% }) %>
+</body>
+</html>
