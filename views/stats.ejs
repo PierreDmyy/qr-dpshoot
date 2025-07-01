@@ -1,0 +1,7 @@
+<h2>Stats pour <%= slug %></h2>
+<table border="1">
+<tr><th>IP</th><th>User Agent</th><th>Date</th></tr>
+<% rows.forEach(r => { %>
+<tr><td><%= r.ip %></td><td><%= r.user_agent %></td><td><%= r.timestamp %></td></tr>
+<% }); %>
+</table>
